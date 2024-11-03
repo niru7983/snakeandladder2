@@ -9,38 +9,11 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        #game-container {
-            position: relative;
-            display: inline-block;
-            margin-top: 20px;
-        }
         #board {
-            width: 400px;
-            height: 400px;
-            border: 2px solid black;
-        }
-        .player {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        #player1 {
-            background-color: red;
-        }
-        #player2 {
-            background-color: blue;
-        }
-        #game-info, #game-play {
             margin-top: 20px;
         }
-        #game-play {
-            display: none;
+        #game-info {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -49,11 +22,7 @@
 <h1>Snakes and Ladders</h1>
 <p>Click on "Roll Dice" to play!</p>
 
-<div id="game-container">
-    <img id="board" src="data:image/png;base64,INSERT_BASE64_ENCODED_IMAGE_HERE" alt="Snakes and Ladders Board">
-    <div id="player1" class="player">1</div>
-    <div id="player2" class="player">2</div>
-</div>
+<img id="board" src="board_image.png" alt="Snakes and Ladders Board" width="400">
 
 <div id="game-info">
     <p>Enter Player 1 Name: <input type="text" id="p1_name" placeholder="Player 1"></p>
@@ -61,31 +30,21 @@
     <button onclick="startGame()">Start Game</button>
 </div>
 
-<div id="game-play">
+<div id="game-play" style="display: none;">
     <p id="turn-info"></p>
     <p id="dice-result"></p>
     <p id="player1-score"></p>
+    <p id="player1-position"></p> <!-- Player 1 Position -->
     <p id="player2-score"></p>
+    <p id="player2-position"></p> <!-- Player 2 Position -->
     <button onclick="rollDice()">Roll Dice</button>
     <button onclick="quitGame()">Quit Game</button>
 </div>
 
 <script>
-    // Define the positions on the board (these would depend on the image's layout)
-    const boardPositions = [
-        // Define the x and y coordinates for each position (1-100)
-        // Coordinates for each cell, starting from 1 in the bottom left to 100 in the top left.
-        // The example here assumes a grid layout, adjust as per your image's design.
-        [0, 0],  [20, 380], [60, 380], [100, 380], [140, 380], [180, 380], [220, 380], [260, 380], [300, 380], [340, 380], [380, 380],
-        [380, 340], [340, 340], [300, 340], [260, 340], [220, 340], [180, 340], [140, 340], [100, 340], [60, 340], [20, 340],
-        // Repeat this for all rows up to 100. Example row structure provided.
-        // ...
-    ];
-
     const ladder = {1: 38, 4: 14, 8: 30, 21: 42, 28: 74, 50: 67, 71: 92, 88: 99};
     const snake = {32: 10, 34: 6, 48: 26, 62: 18, 88: 89, 95: 56, 97: 78};
     const end = 100;
-
     let p1_name, p2_name, pp1 = 0, pp2 = 0, turn = 0;
 
     function startGame() {
@@ -94,8 +53,6 @@
         document.getElementById("game-info").style.display = "none";
         document.getElementById("game-play").style.display = "block";
         updateTurnInfo();
-        updatePlayerPosition(pp1, "player1");
-        updatePlayerPosition(pp2, "player2");
     }
 
     function rollDice() {
@@ -109,7 +66,7 @@
             pp1 = checkSnake(pp1);
             if (pp1 > end) pp1 = end;
             document.getElementById("player1-score").innerText = `${p1_name} Score: ${pp1}`;
-            updatePlayerPosition(pp1, "player1");
+            document.getElementById("player1-position").innerText = `${p1_name} Position: ${pp1}`;
             if (pp1 >= end) {
                 alert(`${p1_name} won!`);
                 resetGame();
@@ -121,7 +78,7 @@
             pp2 = checkSnake(pp2);
             if (pp2 > end) pp2 = end;
             document.getElementById("player2-score").innerText = `${p2_name} Score: ${pp2}`;
-            updatePlayerPosition(pp2, "player2");
+            document.getElementById("player2-position").innerText = `${p2_name} Position: ${pp2}`;
             if (pp2 >= end) {
                 alert(`${p2_name} won!`);
                 resetGame();
@@ -165,18 +122,11 @@
         document.getElementById("game-info").style.display = "block";
         document.getElementById("game-play").style.display = "none";
         document.getElementById("player1-score").innerText = "";
+        document.getElementById("player1-position").innerText = "";
         document.getElementById("player2-score").innerText = "";
+        document.getElementById("player2-position").innerText = "";
         document.getElementById("dice-result").innerText = "";
         document.getElementById("turn-info").innerText = "";
-        updatePlayerPosition(0, "player1");
-        updatePlayerPosition(0, "player2");
-    }
-
-    function updatePlayerPosition(position, playerId) {
-        if (position >= boardPositions.length) position = end;
-        let [x, y] = boardPositions[position];
-        document.getElementById(playerId).style.left = `${x}px`;
-        document.getElementById(playerId).style.top = `${y}px`;
     }
 </script>
 
