@@ -4,55 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snakes and Ladders Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 20px;
-        }
-        #game-container {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            margin: 0 auto;
-            border: 5px solid #333;
-        }
-        #board {
-            width: 100%;
-            height: 100%;
-            background-image: url('/path/to/your/board_image.png'); /* Update with the path to your image */
-            background-size: cover;
-        }
-        .player {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: red;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-        }
-        .player2 {
-            background-color: blue;
-        }
-        #controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 5px;
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
 </head>
 <body>
 
 <h1>Snakes and Ladders Game</h1>
 <div id="game-container">
-    <div id="board"></div>
+    <img id="board" src="/path/to/your/board_image.png" alt="Snakes and Ladders Board">
     <div id="player1" class="player">1</div>
     <div id="player2" class="player player2">2</div>
 </div>
@@ -67,92 +25,6 @@
 
 <div id="message"></div>
 
-<script>
-    let ladder = {1: 38, 4: 14, 8: 30, 21: 42, 28: 74, 50: 67, 71: 92, 88: 99};
-    let snake = {32: 10, 34: 6, 48: 26, 62: 18, 88: 89, 95: 56, 97: 78};
-    let end = 100;
-    let p1_name, p2_name;
-    let pp1 = 0, pp2 = 0;
-    let turn = 0;
-    let gameStarted = false;
-
-    const boardSize = 400; // Board size in pixels
-    const tileSize = boardSize / 10; // Assuming a 10x10 board layout
-
-    function startGame() {
-        p1_name = document.getElementById("p1_name").value;
-        p2_name = document.getElementById("p2_name").value;
-        if (!p1_name || !p2_name) {
-            alert("Please enter names for both players.");
-            return;
-        }
-        pp1 = pp2 = 0;
-        turn = 0;
-        gameStarted = true;
-        updatePosition("player1", pp1);
-        updatePosition("player2", pp2);
-        document.getElementById("message").innerText = `${p1_name}, it's your turn!`;
-    }
-
-    function rollDice() {
-        if (!gameStarted) {
-            alert("Please start the game first.");
-            return;
-        }
-        
-        let player = turn % 2 === 0 ? p1_name : p2_name;
-        let currentPlayerPos = turn % 2 === 0 ? pp1 : pp2;
-
-        let dice = Math.floor(Math.random() * 6) + 1;
-        document.getElementById("message").innerText = `${player} rolled a ${dice}!`;
-
-        currentPlayerPos += dice;
-        
-        if (ladder[currentPlayerPos]) {
-            document.getElementById("message").innerText += ` Climb up!`;
-            currentPlayerPos = ladder[currentPlayerPos];
-        } else if (snake[currentPlayerPos]) {
-            document.getElementById("message").innerText += ` Ouch! Snake bite!`;
-            currentPlayerPos = snake[currentPlayerPos];
-        }
-
-        if (currentPlayerPos >= end) {
-            document.getElementById("message").innerText = `${player} wins the game!`;
-            gameStarted = false;
-            return;
-        }
-
-        if (turn % 2 === 0) {
-            pp1 = currentPlayerPos;
-            updatePosition("player1", pp1);
-            document.getElementById("message").innerText += ` ${p1_name}'s score: ${pp1}`;
-        } else {
-            pp2 = currentPlayerPos;
-            updatePosition("player2", pp2);
-            document.getElementById("message").innerText += ` ${p2_name}'s score: ${pp2}`;
-        }
-
-        turn++;
-        document.getElementById("message").innerText += ` Next turn: ${turn % 2 === 0 ? p1_name : p2_name}`;
-    }
-
-    function updatePosition(playerId, position) {
-        const row = Math.floor((position - 1) / 10);
-        const col = (position - 1) % 10;
-        const isEvenRow = row % 2 === 0;
-        const x = isEvenRow ? col * tileSize : (9 - col) * tileSize;
-        const y = (9 - row) * tileSize;
-        
-        const player = document.getElementById(playerId);
-        player.style.left = `${x}px`;
-        player.style.top = `${y}px`;
-    }
-
-    function quitGame() {
-        gameStarted = false;
-        document.getElementById("message").innerText = `Game over. ${p1_name} score: ${pp1}, ${p2_name} score: ${pp2}`;
-    }
-</script>
-
+<script src="script.js"></script> <!-- Link to the JavaScript file -->
 </body>
 </html>
