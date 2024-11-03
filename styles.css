@@ -1,8 +1,8 @@
 /* Game container and board styles */
 #game-container {
     position: relative;
-    width: device-width, initial-scale=1.0; /* Set to the size of your board image */
-    height: device-height, initial-scale=1.0;
+    width: 400px; /* Set to the size of your board image */
+    height: 400px;
     margin: 0 auto;
     border: 5px solid #333;
 }
