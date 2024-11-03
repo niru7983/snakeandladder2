@@ -34,9 +34,7 @@
     <p id="turn-info"></p>
     <p id="dice-result"></p>
     <p id="player1-score"></p>
-    <p id="player1-position"></p> <!-- Player 1 Position -->
     <p id="player2-score"></p>
-    <p id="player2-position"></p> <!-- Player 2 Position -->
     <button onclick="rollDice()">Roll Dice</button>
     <button onclick="quitGame()">Quit Game</button>
 </div>
@@ -66,7 +64,6 @@
             pp1 = checkSnake(pp1);
             if (pp1 > end) pp1 = end;
             document.getElementById("player1-score").innerText = `${p1_name} Score: ${pp1}`;
-            document.getElementById("player1-position").innerText = `${p1_name} Position: ${pp1}`;
             if (pp1 >= end) {
                 alert(`${p1_name} won!`);
                 resetGame();
@@ -78,7 +75,6 @@
             pp2 = checkSnake(pp2);
             if (pp2 > end) pp2 = end;
             document.getElementById("player2-score").innerText = `${p2_name} Score: ${pp2}`;
-            document.getElementById("player2-position").innerText = `${p2_name} Position: ${pp2}`;
             if (pp2 >= end) {
                 alert(`${p2_name} won!`);
                 resetGame();
@@ -122,9 +118,7 @@
         document.getElementById("game-info").style.display = "block";
         document.getElementById("game-play").style.display = "none";
         document.getElementById("player1-score").innerText = "";
-        document.getElementById("player1-position").innerText = "";
         document.getElementById("player2-score").innerText = "";
-        document.getElementById("player2-position").innerText = "";
         document.getElementById("dice-result").innerText = "";
         document.getElementById("turn-info").innerText = "";
     }
