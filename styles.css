@@ -10,6 +10,8 @@
 #board {
     width: device-width, initial-scale=1.0;
     height: device-height, initial-scale=1.0;
+     justify-content: center;
+    align-items: center;
 
     display: block;
     object-fit: cover; /* Ensures the image fits within the container */
